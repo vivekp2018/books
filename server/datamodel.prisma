@@ -1,0 +1,31 @@
+type User {
+  id: ID! @unique
+  firstName: String!
+  lastName: String!
+  email: String! @unique
+  password: String!
+  books: [Book]!
+}
+type Author {
+  id: ID! @unique
+  name: String!
+  bio: String!
+  books: [Book!] @relation(name: "AuthorToBook", onDelete: CASCADE)
+  #@relation(name: "authorToBook", onDelete: CASCADE)
+}
+type Publisher {
+  id: ID! @unique
+  name: String!
+  description: String!
+  books: [Book!] @relation(name: "BookToPublisher", onDelete: CASCADE)
+}
+
+type Book {
+  id: ID! @unique
+  title: String!
+  description: String!
+  image: String!
+  authors: Author! @relation(name: "AuthorToBook", onDelete: SET_NULL)
+  publisher: Publisher! @relation(name: "BookToPublisher", onDelete: SET_NULL)
+  users: [User]!
+}

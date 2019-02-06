@@ -1,0 +1,69 @@
+#import * from '../generated/prisma.graphql'
+type Query {
+  users(id: ID, email: String): [User]!
+  books(id: ID, title: String, author: String, publisher: String): [Book!]
+  authors(id: ID, name: String): [Author!]
+  publishers(id: ID, name: String): [Publisher!]
+  me: User
+}
+
+type LogMessage {
+  message: String!
+}
+
+type User {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+}
+
+type Mutation {
+  signUp(data: CreateUserInput): UserPayload!
+  login(data: loginInput): UserPayload!
+  createAuthor(data: authorInput): Author!
+  createPublisher(data: publisherInput): Publisher!
+  createBook(data: bookInput): Book!
+  signout: SuccessMsg!
+  #updateUser()
+  # updatePublisher()
+  # updateBook()
+  # deleteAuthor()
+  #deletePublisher()
+  #deleteBook()
+}
+type SuccessMsg {
+  message: String!
+}
+
+input authorInput {
+  name: String!
+  bio: String!
+}
+input publisherInput {
+  name: String!
+  description: String!
+}
+input bookInput {
+  title: String!
+  description: String!
+  image: String!
+  author: String!
+  publisher: String!
+}
+input loginInput {
+  email: String!
+  password: String!
+}
+
+input CreateUserInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+}
+
+type UserPayload {
+  user: User!
+  token: String!
+}
